@@ -3,13 +3,17 @@ class Task:
     def __init__(self):        #do I need to make any of these variables non local or global?
         #will try just making them local and if needed modify them
         self.name = input("Please enter task name ")
-        self.reward = input("Please enter what the reward one task completion is ")
-        self.min = input("Please enter what the minimum number of tasks completed to have a reward is ")
-        self.max = input("Please enter what the maximum total reward for tasks of this type can be ")
+        self.reward = int(input("Please enter what the reward one task completion is "))
+        self.min = int(input("Please enter what the minimum number of tasks completed to have a reward is "))
+        self.max = int(input("Please enter what the maximum total reward for tasks of this type can be "))
 
 
-
-
+    def evaluate(self):
+        self.reps = int(input("How many " + self.name + " were completed?"))
+        if self.reps < self.min:
+            return 0
+        else:
+            return min(self.max, self.reps * self.reward)
 
 
 
@@ -18,9 +22,8 @@ taskList = []
 for i in range(numberOfTasks):
     taskList.append(Task())
 
-
+totalReward: int = 0
 for i in taskList:
-    print(i.name)
-    print(i.reward)
-    print(i.min)
-    print(i.max)
+    totalReward += i.evaluate()
+
+print("Total Reward is " + str(totalReward))
